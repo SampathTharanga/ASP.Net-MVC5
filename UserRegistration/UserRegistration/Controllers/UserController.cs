@@ -21,6 +21,11 @@ namespace UserRegistration.Controllers
         {
             using (AppDBEntities dbModel = new AppDBEntities())
             {
+                if (dbModel.Users.Any(x => x.UserName == userModel.UserName))
+                {
+                    ViewBag.DuplicateMessage = "UserName alredy exit!";
+                    return View("AddOrEdit", userModel);
+                }
                 dbModel.Users.Add(userModel);
                 dbModel.SaveChanges();
             }
